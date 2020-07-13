@@ -1,28 +1,21 @@
 <?php
 /**
- * Plugin Name: Login Designer
- * Plugin URI: @@pkg.plugin_uri
- * Description: @@pkg.description
- * Author: @@pkg.author
- * Author URI: @@pkg.author_uri
- * Version: 1.1.12
- * Text Domain: @@textdomain
- * Domain Path: languages
- * Requires at least: @@pkg.requires
- * Tested up to: @@pkg.tested_up_to
+ * Plugin Name:     Login Designer
+ * Plugin URI:      https://logindesigner.com
+ * Description:     The easiest way to completely customize your WordPress login page. Create stunning login templates in seconds with the most beautiful and elegant login customizer WordPress plugin.
+ * Author:          Rich Tabor
+ * Author URI:      https://logindesigner.com
+ * Text Domain:     login-designer
+ * Domain Path:     /languages
+ * Version:         1.2.5
  *
- * @@pkg.title is free software: you can redistribute it and/or modify
+ * Login Designer is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  *
- * @@pkg.title is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
- * along with @@pkg.title. If not, see <http://www.gnu.org/licenses/>.
+ * along with Login Designer. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package Login Designer
  */
@@ -32,6 +25,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'LOGIN_DESIGNER_VERSION', '1.2.4' );
+define( 'LOGIN_DESIGNER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'LOGIN_DESIGNER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'LOGIN_DESIGNER_PLUGIN_FILE', __FILE__ );
+define( 'LOGIN_DESIGNER_CUSTOMIZE_CONTROLS_DIR', plugin_dir_path( __FILE__ ) . 'includes/controls/' );
+define( 'LOGIN_DESIGNER_DEBUG', true );
+define( 'LOGIN_DESIGNER_HAS_PRO', false );
+define( 'LOGIN_DESIGNER_STORE_URL', 'https://logindesigner.com/' );
+
 if ( ! class_exists( 'Login_Designer' ) ) :
 
 	/**
@@ -40,10 +42,9 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 	 * @since 1.0.0
 	 */
 	final class Login_Designer {
-		/** Singleton *************************************************************/
 
 		/**
-		 * Login_Designer The one true Login_Designer
+		 * This plugin's instance.
 		 *
 		 * @var string $instance
 		 */
@@ -57,18 +58,11 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 *
 		 * @since 1.0.0
 		 * @static
-		 * @static var array $instance
-		 * @uses Login_Designer::constants() Setup the constants needed.
-		 * @uses Login_Designer::init() Initiate actions and filters.
-		 * @uses Login_Designer::includes() Include the required files.
-		 * @uses Login_Designer::load_textdomain() load the language files.
-		 * @see LOGIN_DESIGNER()
 		 * @return object|Login_Designer The one true Login_Designer
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Login_Designer ) ) {
 				self::$instance = new Login_Designer();
-				self::$instance->constants();
 				self::$instance->init();
 				self::$instance->asset_suffix();
 				self::$instance->includes();
@@ -89,7 +83,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		public function __clone() {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '@@textdomain' ), '1.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'login-designer' ), '1.0' );
 		}
 
 		/**
@@ -100,37 +94,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		public function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '@@textdomain' ), '1.0' );
-		}
-
-		/**
-		 * Setup plugin constants.
-		 *
-		 * @access private
-		 * @return void
-		 */
-		private function constants() {
-			$this->define( 'LOGIN_DESIGNER_DEBUG', true );
-			$this->define( 'LOGIN_DESIGNER_HAS_PRO', false );
-			$this->define( 'LOGIN_DESIGNER_VERSION', '@@pkg.version' );
-			$this->define( 'LOGIN_DESIGNER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-			$this->define( 'LOGIN_DESIGNER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-			$this->define( 'LOGIN_DESIGNER_PLUGIN_FILE', __FILE__ );
-			$this->define( 'LOGIN_DESIGNER_ABSPATH', dirname( __FILE__ ) . '/' );
-			$this->define( 'LOGIN_DESIGNER_CUSTOMIZE_CONTROLS_DIR', plugin_dir_path( __FILE__ ) . 'includes/controls/' );
-			$this->define( 'LOGIN_DESIGNER_STORE_URL', 'https://logindesigner.com/' );
-		}
-
-		/**
-		 * Define constant if not already set.
-		 *
-		 * @param  string|string $name Name of the definition.
-		 * @param  string|bool   $value Default value.
-		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
-			}
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'login-designer' ), '1.0' );
 		}
 
 		/**
@@ -139,7 +103,6 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		public function init() {
-			add_action( 'wp_head', array( $this, 'meta_version' ) );
 			add_action( 'admin_init', array( $this, 'check_login_designer_page' ) );
 			add_action( 'admin_init', array( $this, 'redirect_customizer' ) );
 			add_action( 'admin_init', array( $this, 'redirect_edit_page' ) );
@@ -158,10 +121,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		private function includes() {
-
 			if ( is_admin() ) {
-				require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/admin/class-login-designer-license-handler.php';
-				require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/admin/class-login-designer-extension-updater.php';
 				require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/admin/class-login-designer-notices.php';
 				require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/admin/class-login-designer-feedback.php';
 				require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/migration.php';
@@ -175,6 +135,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 			require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/class-login-designer-frontend-settings.php';
 			require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/class-login-designer-templates.php';
 			require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/class-login-designer-theme-template.php';
+			require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/filters.php';
 			require_once LOGIN_DESIGNER_PLUGIN_DIR . 'includes/install.php';
 		}
 
@@ -239,27 +200,17 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		}
 
 		/**
-		 * Add the plugin version to the header.
-		 *
-		 * @access public
-		 * @return void
-		 */
-		public function meta_version() {
-			echo '<meta name="generator" content="Login Designer ' . esc_attr( LOGIN_DESIGNER_VERSION ) . '" />' . "\n";
-		}
-
-		/**
 		 * Add a page under the "Apperance" menu, that links to the Customizer.
 		 *
 		 * @access public
 		 * @return void
 		 */
 		public function options_page() {
-			add_theme_page( esc_html__( 'Login Designer', '@@textdomain' ), esc_html__( 'Login Designer', '@@textdomain' ), 'manage_options', 'login-designer', '__return_null' );
+			add_theme_page( esc_html__( 'Login Designer', 'login-designer' ), esc_html__( 'Login Designer', 'login-designer' ), 'manage_options', 'login-designer', '__return_null' );
 		}
 
 		/**
-		 * Add a dropdown link to the "Customizer" admin bar item.
+		 * Add a link to the "Customizer" admin bar item.
 		 *
 		 * @access public
 		 * @param array $admin_bar WP_Admin_Bar instance.
@@ -283,7 +234,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 				array(
 					'id'     => 'my-sub-item',
 					'parent' => 'customize',
-					'title'  => esc_html__( 'Login Designer', '@@textdomain' ),
+					'title'  => esc_html__( 'Login Designer', 'login-designer' ),
 					'href'   => esc_url( $url ),
 				)
 			);
@@ -296,23 +247,21 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		public function redirect_customizer() {
-			if ( ! empty( $_GET['page'] ) ) { // Input var okay.
-				if ( 'login-designer' === $_GET['page'] ) { // Input var okay.
+			if ( isset( $_GET['page'] ) && 'login-designer' === $_GET['page'] ) { // phpcs:ignore  WordPress.Security.NonceVerification
 
-					// Pull the Login Designer page from options.
-					$page = get_permalink( $this->get_login_designer_page() );
+				// Pull the Login Designer page from options.
+				$page = get_permalink( $this->get_login_designer_page() );
 
-					// Generate the redirect url.
-					$url = add_query_arg(
-						array(
-							'autofocus[section]' => 'login_designer__section--templates',
-							'url'                => rawurlencode( $page ),
-						),
-						admin_url( 'customize.php' )
-					);
+				// Generate the redirect url.
+				$url = add_query_arg(
+					array(
+						'autofocus[section]' => 'login_designer__section--templates',
+						'url'                => rawurlencode( $page ),
+					),
+					admin_url( 'customize.php' )
+				);
 
-					wp_safe_redirect( $url );
-				}
+				wp_safe_redirect( $url );
 			}
 		}
 
@@ -345,8 +294,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 				admin_url( 'customize.php' )
 			);
 
-			/* Check current admin page. */
-			if ( $pagenow == 'post.php' && isset( $_GET['post'] ) && $_GET['post'] == $page_id ) {
+			if ( 'post.php' === $pagenow && ( isset( $_GET['post'] ) && intval( $page_id ) === intval( $_GET['post'] ) ) ) { // phpcs:ignore  WordPress.Security.NonceVerification
 				wp_safe_redirect( $url );
 			}
 		}
@@ -398,7 +346,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 			);
 
 			/* translators: Name of this plugin */
-			$post_content = sprintf( wp_kses( __( '<p>This page is used by <a href="%1$s">%2$s</a> to preview the login forms in the Customizer. Please don\'t delete this page. Thanks!</p>', '@@textdomain' ), $allowed_html_array ), 'https://logindesigner.com', 'Login Designer' );
+			$post_content = sprintf( wp_kses( __( '<p>This page is used by <a href="%1$s">%2$s</a> to preview the login forms in the Customizer. Please don\'t delete this page. Thanks!</p>', 'login-designer' ), $allowed_html_array ), 'https://logindesigner.com', 'Login Designer' );
 
 			// Create the page.
 			$page = wp_insert_post(
@@ -431,7 +379,6 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @access public
 		 */
 		public function get_login_designer_page() {
-
 			$admin_options = get_option( 'login_designer_settings', array() );
 			$page          = array_key_exists( 'login_designer_page', $admin_options ) ? get_post( $admin_options['login_designer_page'] ) : false;
 
@@ -447,7 +394,6 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return string
 		 */
 		public function get_affiliate_id() {
-
 			$id = array( 'ref' => apply_filters( 'login_designer_affiliate_id', null ) );
 
 			return $id;
@@ -462,7 +408,6 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return string
 		 */
 		public function get_store_url( $path = '', $params = array() ) {
-
 			$id = $this->get_affiliate_id();
 
 			$params = array_merge( $params, $id );
@@ -481,11 +426,10 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		public function plugin_action_links( $actions ) {
 
 			// Add the Settings link.
-			$settings = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=login-designer' ), esc_html__( 'Settings', '@@textdomain' ) ) );
+			$settings = array( 'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=login-designer' ), esc_html__( 'Settings', 'login-designer' ) ) );
 
 			// If there's no pro version, just return the settings link.
 			if ( ! $this->has_pro() ) {
-
 				return array_merge(
 					$settings,
 					$actions
@@ -496,7 +440,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 			$license = new Login_Designer_License_Handler();
 
 			if ( $license->is_valid_license() && $this->has_pro() ) {
-				$title = esc_html__( 'Support', '@@textdomain' );
+				$title = esc_html__( 'Support', 'login-designer' );
 
 				$url = Login_Designer()->get_store_url(
 					'support',
@@ -507,9 +451,8 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 						'utm_content'  => 'support',
 					)
 				);
-
 			} else {
-				$title = esc_html__( 'Pro', '@@textdomain' );
+				$title = esc_html__( 'Pro', 'login-designer' );
 
 				$url = Login_Designer()->get_store_url(
 					'support',
@@ -559,7 +502,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 			);
 
 			$links = array(
-				'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html__( 'Extensions', '@@textdomain' ) . '</a>',
+				'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html__( 'Extensions', 'login-designer' ) . '</a>',
 			);
 
 			$input = array_merge( $input, $links );
@@ -600,7 +543,7 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 			);
 
 			$links = array(
-				'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html__( 'Extensions', '@@textdomain' ) . '</a>',
+				'<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html__( 'Extensions', 'login-designer' ) . '</a>',
 			);
 
 			$input = array_merge( $input, $links );
@@ -616,25 +559,16 @@ if ( ! class_exists( 'Login_Designer' ) ) :
 		 * @return void
 		 */
 		public function load_textdomain() {
-			load_plugin_textdomain( '@@textdomain', false, dirname( plugin_basename( LOGIN_DESIGNER_PLUGIN_DIR ) ) . '/languages/' );
+			load_plugin_textdomain( 'login-designer', false, dirname( plugin_basename( LOGIN_DESIGNER_PLUGIN_DIR ) ) . '/languages/' );
 		}
 	}
 
-endif; // End if class_exists check.
+endif;
 
 /**
- * The main function for that returns Login_Designer
+ * Returns the main instance of Login Designer.
  *
- * The main function responsible for returning the one true Login_Designer
- * Instance to functions everywhere.
- *
- * Use this function like you would a global variable, except without needing
- * to declare the global.
- *
- * Example: <?php $login_designer = login_designer(); ?>
- *
- * @since 1.0.0
- * @return object|Login_Designer The one true Login_Designer Instance.
+ * @return Login Designer
  */
 function login_designer() {
 	return Login_Designer::instance();

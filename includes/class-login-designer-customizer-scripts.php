@@ -30,6 +30,7 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls' ) );
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'custom_controls' ) );
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'localization' ), 99 );
+			add_action( 'wp_footer', array( $this, 'export_preview_data' ), 1000 );
 		}
 
 		/**
@@ -42,7 +43,7 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 			// Define where the asset is loaded from.
 			$dir = Login_Designer()->asset_source( 'css' );
 
-			wp_enqueue_style( 'login-designer-customize-controls', $dir . 'login-designer-customize-controls' . LOGIN_DESIGNER_ASSET_SUFFIX . '.css', null );
+			wp_enqueue_style( 'login-designer-customize-controls', $dir . 'login-designer-customize-controls' . LOGIN_DESIGNER_ASSET_SUFFIX . '.css', null, LOGIN_DESIGNER_VERSION );
 		}
 
 		/**
@@ -51,7 +52,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 		 * @access public
 		 */
 		public function customize_styles() {
-
 			if ( ! is_customize_preview() ) {
 				return;
 			}
@@ -94,6 +94,17 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 			$localize = apply_filters( 'login_designer_customize_preview_localization', $localize );
 
 			wp_localize_script( 'login-designer-customize-preview', 'login_designer_script', $localize );
+		}
+
+		/**
+		 * Add export_preview_data() core function, as its missing on the login page within the Customizer.
+		 */
+		public function export_preview_data() {
+			if ( ! is_customize_preview() ) {
+				return;
+			}
+
+			echo '<script>var _customizePartialRefreshExports = ""</script>';
 		}
 
 		/**
@@ -157,9 +168,9 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 			// Localization.
 			$localize = array(
 				'ajaxurl'     => admin_url( 'admin-ajax.php' ),
-				'btn_default' => esc_html__( 'Install New Template', '@@textdomain' ),
-				'btn_close'   => esc_html__( 'Close', '@@textdomain' ),
-				'confirm'     => esc_html__( 'Attention! You are attempting to reset all custom styling added to Login Designer. Please note that this action is irreversible. Proceed?', '@@textdomain' ),
+				'btn_default' => esc_html__( 'Install New Template', 'login-designer' ),
+				'btn_close'   => esc_html__( 'Close', 'login-designer' ),
+				'confirm'     => esc_html__( 'Attention! You are attempting to reset all custom styling added to Login Designer. Please note that this action is irreversible. Proceed?', 'login-designer' ),
 				'nonce'       => array(
 					'activate'   => wp_create_nonce( 'login-designer-activate-license' ),
 					'deactivate' => wp_create_nonce( 'login-designer-deactivate-license' ),
@@ -173,7 +184,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Scripts' ) ) :
 			} else {
 				wp_localize_script( 'login-designer-customize-custom-controls', 'login_designer_custom_controls', $localize );
 			}
-
 		}
 	}
 

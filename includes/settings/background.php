@@ -6,7 +6,7 @@
  */
 
 // Set background choices from the Customize class.
-$background_choices = $this->get_background_choices();
+$login_designer_background_choices = $this->get_background_choices();
 
 $wp_customize->add_setting(
 	'login_designer[bg_title]',
@@ -21,7 +21,7 @@ $wp_customize->add_control(
 		'login_designer[bg_title]',
 		array(
 			'type'    => 'login-designer-title',
-			'label'   => esc_html__( 'Upload Background', '@@textdomain' ),
+			'label'   => esc_html__( 'Upload Background', 'login-designer' ),
 			'section' => 'login_designer__section--styles',
 		)
 	)
@@ -63,8 +63,8 @@ $wp_customize->add_control(
 		$wp_customize,
 		'login_designer[bg_image_gallery]',
 		array(
-			'label'       => esc_html__( 'Background Gallery', '@@textdomain' ),
-			'description' => esc_html__( 'Pick a background image from our curated collection of beautiful images.', '@@textdomain' ),
+			'label'       => esc_html__( 'Background Gallery', 'login-designer' ),
+			'description' => esc_html__( 'Pick a background image from our curated collection of beautiful images.', 'login-designer' ),
 			'type'        => 'login-designer-gallery',
 			'section'     => 'login_designer__section--styles',
 			'choices'     => $this->get_choices( $this->get_background_images() ),
@@ -87,9 +87,9 @@ $wp_customize->add_control(
 	'login_designer[bg_repeat]',
 	array(
 		'type'    => 'select',
-		'label'   => esc_html__( 'Repeat', '@@textdomain' ),
+		'label'   => esc_html__( 'Repeat', 'login-designer' ),
 		'section' => 'login_designer__section--styles',
-		'choices' => $background_choices['repeat'],
+		'choices' => $login_designer_background_choices['repeat'],
 	)
 );
 
@@ -107,9 +107,9 @@ $wp_customize->add_control(
 	'login_designer[bg_size]',
 	array(
 		'type'    => 'select',
-		'label'   => esc_html__( 'Size', '@@textdomain' ),
+		'label'   => esc_html__( 'Size', 'login-designer' ),
 		'section' => 'login_designer__section--styles',
-		'choices' => $background_choices['size'],
+		'choices' => $login_designer_background_choices['size'],
 	)
 );
 
@@ -127,9 +127,9 @@ $wp_customize->add_control(
 	'login_designer[bg_attach]',
 	array(
 		'type'    => 'select',
-		'label'   => esc_html__( 'Attachment', '@@textdomain' ),
+		'label'   => esc_html__( 'Attachment', 'login-designer' ),
 		'section' => 'login_designer__section--styles',
-		'choices' => $background_choices['attach'],
+		'choices' => $login_designer_background_choices['attach'],
 	)
 );
 
@@ -147,9 +147,9 @@ $wp_customize->add_control(
 	'login_designer[bg_position]',
 	array(
 		'type'    => 'select',
-		'label'   => esc_html__( 'Position', '@@textdomain' ),
+		'label'   => esc_html__( 'Position', 'login-designer' ),
 		'section' => 'login_designer__section--styles',
-		'choices' => $background_choices['position'],
+		'choices' => $login_designer_background_choices['position'],
 	)
 );
 
@@ -168,7 +168,7 @@ $wp_customize->add_control(
 		$wp_customize,
 		'login_designer[bg_color]',
 		array(
-			'label'   => esc_html__( 'Color', '@@textdomain' ),
+			'label'   => esc_html__( 'Color', 'login-designer' ),
 			'section' => 'login_designer__section--styles',
 		)
 	)

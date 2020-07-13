@@ -50,6 +50,10 @@
 	}
 }
 
+.login .button.wp-hide-pw {
+	transition: 0 !important;
+}
+
 .login-designer--form-footer {
 	margin-top: 16px;
 }
@@ -116,11 +120,6 @@ body:hover .customize-partial-edit-shortcut {
 		opacity: 0 !important;
 		visibility: hidden !important;
 	}
-
-	// .login-designer-badge-left & {
-	// 	left: inherit !important;
-	// 	right: 10px !important;
-	// }
 }
 
 

@@ -44,7 +44,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string
 		 */
 		public function option_wrapper( $option ) {
-
 			$options = get_option( 'login_designer' );
 
 			// Check if options exist.
@@ -66,7 +65,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return array $defaults
 		 */
 		public function defaults() {
-
 			$defaults = array(
 				'bg_image'              => '',
 				'bg_image_gallery'      => '',
@@ -78,8 +76,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				'logo'                  => '',
 				'logo_width'            => '84',
 				'logo_height'           => '84',
-				'logo_mobile_width'     => '84',
-				'logo_mobile_height'    => '84',
 				'logo_margin_bottom'    => '25',
 				'disable_logo'          => false,
 				'form_bg'               => '#ffffff',
@@ -104,8 +100,8 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				'field_font'            => 'default',
 				'field_font_size'       => '24',
 				'field_color'           => '#32373c',
-				'username_label'        => esc_html__( 'Username or Email Address', '@@textdomain' ),
-				'password_label'        => esc_html__( 'Password', '@@textdomain' ),
+				'username_label'        => esc_html__( 'Username or Email Address', 'login-designer' ),
+				'password_label'        => esc_html__( 'Password', 'login-designer' ),
 				'label_font'            => 'default',
 				'label_position'        => '2',
 				'label_font_size'       => '14',
@@ -149,7 +145,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string
 		 */
 		public function admin_option_wrapper( $option ) {
-
 			$options = get_option( 'login_designer_settings' );
 
 			// Check if options exist.
@@ -172,7 +167,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string
 		 */
 		public function license_option_wrapper( $option ) {
-
 			$options = get_option( 'login_designer_license' );
 
 			// Check if options exist.
@@ -195,7 +189,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return array $defaults
 		 */
 		public function admin_defaults() {
-
 			$admin_defaults = array(
 				'login_designer_page' => '',
 				'logo_url'            => '',
@@ -204,8 +197,8 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				'login_message'       => '',
 				'branding'            => false,
 				'branding_position'   => 'right',
-				'branding_color'      => '#303030',
-				'branding_icon_color' => '#303030',
+				'branding_color'      => '#444444',
+				'branding_icon_color' => '#32373c',
 
 			);
 
@@ -218,7 +211,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return array $backgrounds
 		 */
 		public function extension_backgrounds() {
-
 			$backgrounds = array();
 
 			return apply_filters( 'login_designer_extension_background_options', $backgrounds );
@@ -230,7 +222,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return array $backgrounds
 		 */
 		public function extension_colors() {
-
 			$colors = array();
 
 			return apply_filters( 'login_designer_extension_color_options', $colors );
@@ -242,7 +233,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string Google fonts URL for the theme.
 		 */
 		public function fonts() {
-
 			$fonts_url = '';
 			$fonts     = array();
 
@@ -302,7 +292,7 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * Register Google fonts from the Customizer.
 		 */
 		public function enqueue_fonts() {
-			wp_enqueue_style( 'login-designer-fonts', $this->fonts(), array(), null );
+			wp_enqueue_style( 'login-designer-fonts', $this->fonts(), array(), LOGIN_DESIGNER_VERSION );
 		}
 
 		/**
@@ -313,7 +303,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return array|array   $urls           URLs to print for resource hints.
 		 */
 		public function fonts_resource_hints( $urls, $relation_type ) {
-
 			if ( wp_style_is( 'login-designer-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
 				$urls[] = array(
 					'href' => 'https://fonts.gstatic.com',
@@ -333,7 +322,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string
 		 */
 		public function custom_username_label( $translated_text, $text, $domain ) {
-
 			$default = 'Username or Email Address';
 			$options = get_option( 'login_designer' );
 			$label   = $this->option_wrapper( 'username_label' );
@@ -366,7 +354,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * @return string
 		 */
 		public function custom_password_label( $translated_text, $text, $domain ) {
-
 			$default = 'Password';
 			$options = get_option( 'login_designer' );
 			$label   = $this->option_wrapper( 'password_label' );
@@ -394,7 +381,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 		 * Callback to retrieve the custom logo via AJAX from within the live previewer.
 		 */
 		public function get_logo_info_callback() {
-
 			$logo = $this->option_wrapper( 'logo' );
 			$logo = wp_get_attachment_image_src( $logo, 'full' );
 
@@ -450,6 +436,7 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				}
 
 				#login form {
+					border: 0;
 					overflow: visible;
 					margin-top: 0;
 				}
@@ -472,6 +459,25 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				#login form .forgetmenot {
 					margin-top: 5px;
+				}
+
+				.wp-pwd {
+					margin-bottom: 16px;
+				}
+
+				#user_pass {
+					margin-bottom: 0;
+				}
+
+				.login .button.wp-hide-pw {
+					line-height: 1;
+					bottom: 0;
+					height: calc(100% - 5px);
+					top: 5px;
+				}
+
+				.login .button.wp-hide-pw .dashicons {
+					top: 0;
 				}
 
 				#login-designer-logo-h1 {
@@ -533,7 +539,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 					// If this is an extenstion image, stop here. The extenstion takes over styling.
 					if ( ! in_array( $options['bg_image_gallery'], $this->extension_backgrounds(), true ) ) {
-
 						$image_dir = LOGIN_DESIGNER_PLUGIN_URL . 'assets/images/backgrounds/';
 
 						// Get the image's url.
@@ -565,13 +570,10 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				// Logo.
 				if ( isset( $options['logo'] ) ) {
-
 					$image = wp_get_attachment_image_src( $options['logo'], 'full' );
 
-					$width         = isset( $options['logo_width'] ) ? $options['logo_width'] : $image[1] / 2;
-					$height        = isset( $options['logo_height'] ) ? $options['logo_height'] : $image[2] / 2;
-					$mobile_width  = isset( $options['logo_mobile_width'] ) ? $options['logo_mobile_width'] : $image[1] / 2;
-					$mobile_height = isset( $options['logo_mobile_height'] ) ? $options['logo_mobile_height'] : $image[2] / 2;
+					$width  = isset( $options['logo_width'] ) ? $options['logo_width'] : $image[1] / 2;
+					$height = isset( $options['logo_height'] ) ? $options['logo_height'] : $image[2] / 2;
 
 					$css .= '
 
@@ -591,34 +593,17 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 						#login-designer-logo,
 						body.login #login h1 a {
-							background-size: ' . absint( $mobile_width ) . 'px ' . absint( $mobile_height ) . 'px ;
+							background-size: ' . absint( $width ) . 'px ' . absint( $height ) . 'px ;
 						}
 
 						#login-designer-logo-h1,
 						body.login #login h1 a {
-							width: ' . absint( $mobile_width ) . 'px;
-							height: ' . absint( $mobile_height ) . 'px;
+							width: ' . absint( $width ) . 'px;
+							height: ' . absint( $height ) . 'px;
 						}
 
 						#login-designer-logo-h1 {
-							width: ' . absint( $mobile_width ) . 'px !important;
-						}
-
-						@media screen and (min-width: 600px) {
-							#login-designer-logo,
-							body.login #login h1 a {
-								background-size: ' . absint( $width ) . 'px ' . absint( $height ) . 'px ;
-							}
-
-							#login-designer-logo-h1,
-							body.login #login h1 a {
-								width: ' . absint( $width ) . 'px;
-								height: ' . absint( $height ) . 'px;
-							}
-
-							#login-designer-logo-h1 {
-								width: ' . absint( $width ) . 'px !important;
-							}
+							width: ' . absint( $width ) . 'px !important;
 						}
 					';
 				}
@@ -666,7 +651,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				// Form box-shadow.
 				if ( isset( $options['form_shadow'] ) ) {
-
 					$opacity = ( isset( $options['form_shadow_opacity'] ) * .01 ) ? $options['form_shadow_opacity'] * .01 : 0;
 
 					$css .= '#login form { box-shadow: 0 0 ' . esc_attr( $options['form_shadow'] ) . 'px rgba(0, 0, 0, ' . esc_attr( $opacity ) . '); }';
@@ -696,7 +680,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				// Field margin bottom.
 				if ( isset( $options['field_margin_bottom'] ) ) {
-
 					if ( is_customize_preview() ) {
 						$css .= '#login-designer--username { margin-bottom: ' . esc_attr( $options['field_margin_bottom'] ) . 'px }';
 					} else {
@@ -723,7 +706,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				// Field box-shadow.
 				if ( isset( $options['field_shadow'] ) ) {
-
 					$opacity = ( isset( $options['field_shadow_opacity'] ) * .01 ) ? $options['field_shadow_opacity'] * .01 : 0;
 
 					$inset = isset( $options['field_shadow_inset'] ) ? 'inset' : '';
@@ -756,6 +738,8 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				// Field font color.
 				if ( isset( $options['field_color'] ) ) {
 					$css .= '#login form .input { color: ' . esc_attr( $options['field_color'] ) . ' }';
+					$css .= '#login .button.wp-hide-pw { color: ' . esc_attr( $options['field_color'] ) . '; }';
+					$css .= '#login .button.wp-hide-pw:focus { border-color: currentColor; box-shadow: 0 0 0 1px currentColor; }';
 				}
 
 				// Label font, as long as it's not 'default'.
@@ -821,7 +805,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 
 				// Field box-shadow.
 				if ( isset( $options['button_shadow'] ) ) {
-
 					$opacity = ( isset( $options['button_shadow_opacity'] ) * .01 ) ? $options['button_shadow_opacity'] * .01 : 0;
 
 					$css .= '#login form .submit .button { box-shadow: 0 0 ' . esc_attr( $options['button_shadow'] ) . 'px rgba(0, 0, 0, ' . esc_attr( $opacity ) . '); }';
@@ -926,7 +909,6 @@ if ( ! class_exists( 'Login_Designer_Customizer_Output' ) ) :
 				if ( isset( $options['below_font_size'] ) ) {
 					$css .= '#login #nav, #login #nav a, #login #backtoblog a { font-size: ' . esc_attr( $options['below_font_size'] ) . 'px }';
 				}
-
 			endif;
 
 			// Combine the values from above and minifiy them.
